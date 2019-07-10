@@ -28,8 +28,8 @@ internal fun Routing.handleBoards() {
                 return@post call.notFound()
             }
 
-            val subject = form["subject"]!!
-            val comment = form["comment"]!!
+            val subject = form["subject"]!!.trim()
+            val comment = form["comment"]!!.trim()
             if (subject.length !in 1..100 || comment.length !in 1..1000) {
                 return@post call.notFound()
             }
@@ -57,7 +57,7 @@ internal fun Routing.handleBoards() {
                 val form = call.receiveMultipartForm()
                 val files = if (form.file == null) emptyList() else listOf(form.file.name)
 
-                val comment = form["comment"]!!
+                val comment = form["comment"]!!.trim()
                 if (comment.length !in 1..1000) {
                     return@post call.notFound()
                 }

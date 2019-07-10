@@ -69,28 +69,8 @@ internal class ThreadViewTemplate(
                         }
                     }
                 }
-                // Show the most recent five posts.
                 div(classes = "post") {
-                    // If there are hidden replies then show a message about it.
-                    val count = thread.posts.size
-                    if (count > 7) {
-                        val hiddenPosts = count - 7
-                        val hiddenImages = thread
-                            .posts
-                            .slice(2 until count - 5)
-                            .sumBy { it.images.size }
-
-                        val replySOP = if (hiddenPosts == 1) "reply" else "replies"
-                        val imageSOP = if (hiddenImages == 1) "image" else "images"
-
-                        p(classes = "id") {
-                            style = "padding-left:20px;"
-                            +"$hiddenPosts $replySOP and $hiddenImages $imageSOP omitted. "
-                            a(href = "/${board.code}/${thread.id}") { +"Click here" }
-                            +" to view."
-                        }
-                    }
-                    for (post in thread.posts.drop(2).takeLast(5)) {
+                    for (post in thread.posts.drop(2)) {
                         div(classes = "left-ar") {
                             style = "float:left;"
                             p { +">>" }
