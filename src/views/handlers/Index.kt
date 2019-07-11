@@ -1,8 +1,9 @@
-package dev.lunarcoffee.airchan.views.handlers
+package views.handlers
 
-import dev.lunarcoffee.airchan.formatter
-import dev.lunarcoffee.airchan.model.Board
-import dev.lunarcoffee.airchan.views.templates.DefaultStyleTemplate
+import formatter
+import model.Board
+import services.noImageFile
+import views.templates.DefaultStyleTemplate
 import io.ktor.application.call
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.routing.Routing
@@ -80,7 +81,14 @@ internal fun Routing.handleIndex() {
                                 }
 
                                 val posts = thread.posts.size - 2
-                                val images = thread.posts.sumBy { it.images.size }
+                                val images = thread.posts.sumBy {
+                                    if (it.images.firstOrNull()?.matches(noImageFile) == true) {
+                                        0
+                                    } else {
+                                        it.images.size
+                                    }
+                                }
+
                                 val replySOP = if (posts == 1) "reply" else "replies"
                                 val imageSOP = if (images == 1) "image" else "images"
 

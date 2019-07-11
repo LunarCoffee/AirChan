@@ -1,4 +1,4 @@
-package dev.lunarcoffee.airchan.services
+package services
 
 import kotlinx.html.*
 import java.io.File
@@ -6,7 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import javax.imageio.ImageIO
 
-private val noImageFileRegex = """\d+-no-image.png""".toRegex()
+internal val noImageFile = """\d+-no-image.png""".toRegex()
 
 internal fun HtmlBlockTag.showImages(images: List<String>, op: Boolean = false) {
     if (images.isEmpty()) {
@@ -39,7 +39,7 @@ internal fun HtmlBlockTag.showImages(images: List<String>, op: Boolean = false) 
 
                 // The user did not manually upload a photo here.
                 +"File: "
-                if (image.matches(noImageFileRegex)) {
+                if (image.matches(noImageFile)) {
                     +"(none)"
                     return@div
                 }

@@ -1,7 +1,7 @@
-package dev.lunarcoffee.airchan.model
+package model
 
-import dev.lunarcoffee.airchan.formatDefault
-import dev.lunarcoffee.airchan.services.IdGenerator
+import formatDefault
+import services.IdGenerator
 import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random

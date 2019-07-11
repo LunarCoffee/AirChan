@@ -1,6 +1,6 @@
-package dev.lunarcoffee.airchan.model
+package model
 
-import dev.lunarcoffee.airchan.gson
+import gson
 import java.io.File
 
 internal class Board(val code: String, val name: String, val section: String) {

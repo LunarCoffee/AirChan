@@ -1,10 +1,10 @@
-package dev.lunarcoffee.airchan.views.handlers
+package views.handlers
 
-import dev.lunarcoffee.airchan.model.Board
-import dev.lunarcoffee.airchan.model.Thread
+import model.Board
+import model.Thread
 import dev.lunarcoffee.airchan.services.*
-import dev.lunarcoffee.airchan.views.templates.BoardViewTemplate
-import dev.lunarcoffee.airchan.views.templates.ThreadViewTemplate
+import views.templates.BoardViewTemplate
+import views.templates.ThreadViewTemplate
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.features.origin
@@ -15,6 +15,9 @@ import io.ktor.response.respondRedirect
 import io.ktor.routing.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import services.*
+import services.IdGenerator
+import services.UPLOAD_DIR
 import java.nio.file.Files
 import java.nio.file.Paths
 

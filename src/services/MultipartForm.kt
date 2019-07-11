@@ -1,4 +1,4 @@
-package dev.lunarcoffee.airchan.services
+package services
 
 import io.ktor.application.ApplicationCall
 import io.ktor.http.content.*

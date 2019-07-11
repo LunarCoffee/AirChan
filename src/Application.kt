@@ -1,7 +1,5 @@
-package dev.lunarcoffee.airchan
-
-import dev.lunarcoffee.airchan.views.handlers.handleBoards
-import dev.lunarcoffee.airchan.views.handlers.handleIndex
+import views.handlers.handleBoards
+import views.handlers.handleIndex
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*

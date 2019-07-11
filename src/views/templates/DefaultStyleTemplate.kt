@@ -1,4 +1,4 @@
-package dev.lunarcoffee.airchan.views.templates
+package views.templates
 
 import io.ktor.html.*
 import kotlinx.html.*

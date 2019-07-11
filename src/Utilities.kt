@@ -1,7 +1,5 @@
-package dev.lunarcoffee.airchan
-
 import com.google.gson.Gson
-import dev.lunarcoffee.airchan.services.IdGenerator
+import services.IdGenerator
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

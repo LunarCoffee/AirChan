@@ -1,6 +1,6 @@
-package dev.lunarcoffee.airchan.views.templates
+package views.templates
 
-import dev.lunarcoffee.airchan.model.Board
+import model.Board
 import io.ktor.html.*
 import kotlinx.html.*
 
