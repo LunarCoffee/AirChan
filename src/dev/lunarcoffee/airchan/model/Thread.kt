@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random
 
-internal class Thread {
+internal class Thread(val code: String) {
     // This can't be private since Gson needs to set it for the author IDs to be consistent.
     @Suppress("MemberVisibilityCanBePrivate")
     val idSalt = abs(Random.nextLong())

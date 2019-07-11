@@ -1,5 +1,6 @@
 package dev.lunarcoffee.airchan.views.templates
 
+import dev.lunarcoffee.airchan.emsp
 import dev.lunarcoffee.airchan.model.Board
 import dev.lunarcoffee.airchan.model.Thread
 import dev.lunarcoffee.airchan.services.showImages
@@ -37,6 +38,10 @@ internal class ThreadViewTemplate(
                             style = "margin-top:4px;margin-bottom:6px;"
                             value = "Post"
                         }
+                        span {
+                            style = "font-size:10px;color:red;"
+                            +"$emsp* All fields must be filled!"
+                        }
                     }
                 }
                 hr(classes = "thread-sep")
@@ -55,7 +60,14 @@ internal class ThreadViewTemplate(
                         i { +thread.created }
                         span(classes = "id") {
                             +" T${thread.id} $"
-                            a(classes = "reply-id-a") { +opPost.id.toString() }
+                            a(href = "#", classes = "reply-id-a") {
+                                onClick = """
+                                    var e = document.getElementsByTagName("textarea");
+                                    e = e[0];
+                                    e.value = ">>${opPost.id}\n" + e.value;                                                  
+                                """
+                                +opPost.id.toString()
+                            }
                             +" A${opPost.authorId}"
                         }
                         p { style = "font-size:11px;" }

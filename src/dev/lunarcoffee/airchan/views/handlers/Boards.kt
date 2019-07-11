@@ -25,16 +25,16 @@ internal fun Routing.handleBoards() {
         post("/p") {
             val form = call.receiveMultipartForm()
             if (form.file == null) {
-                return@post call.notFound()
+                return@post call.backToBoard()
             }
 
             val subject = form["subject"]!!.trim()
             val comment = form["comment"]!!.trim()
             if (subject.length !in 1..100 || comment.length !in 1..1000) {
-                return@post call.notFound()
+                return@post call.backToBoard()
             }
 
-            val board = call.getBoard() ?: return@post call.notFound()
+            val board = call.getBoard() ?: return@post call.backToBoard()
             if (subject.isNotBlank() && comment.isNotBlank()) {
                 board.createThread(subject)
                 board
@@ -44,7 +44,7 @@ internal fun Routing.handleBoards() {
             }
 
             // Send them back to the board page.
-            call.respondRedirect("/${board.code}")
+            call.backToBoard()
         }
 
         route("/{threadId}") {
@@ -59,16 +59,16 @@ internal fun Routing.handleBoards() {
 
                 val comment = form["comment"]!!.trim()
                 if (comment.length !in 1..1000) {
-                    return@post call.notFound()
+                    return@post call.backToThread()
                 }
 
-                val thread = call.getThread() ?: return@post call.notFound()
+                val thread = call.getThread() ?: return@post call.backToThread()
                 if (comment.isNotBlank()) {
                     thread.createPost(comment, files, call.request.origin.remoteHost)
                 }
 
                 // Send them back to the thread page.
-                call.respondRedirect("/${call.getBoard()!!.code}/${call.parameters["threadId"]}")
+                call.backToThread()
             }
         }
     }
@@ -83,3 +83,9 @@ private fun ApplicationCall.getThread(): Thread? {
 }
 
 private suspend fun ApplicationCall.notFound() = respond(HttpStatusCode.NotFound)
+
+private suspend fun ApplicationCall.backToThread() {
+    respondRedirect("/${getBoard()!!.code}/${parameters["threadId"]}")
+}
+
+private suspend fun ApplicationCall.backToBoard() = respondRedirect("/${getBoard()!!.code}")

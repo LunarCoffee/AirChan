@@ -34,6 +34,10 @@ internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
                             style = "margin-top:4px;"
                             value = "New Thread"
                         }
+                        span {
+                            style = "font-size:10px;color:red;"
+                            +"$emsp* All fields must be filled!"
+                        }
                     }
                 }
                 ul(classes = "posts") {

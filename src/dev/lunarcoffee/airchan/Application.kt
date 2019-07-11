@@ -54,12 +54,6 @@ internal fun Application.module() {
             static("files") { files("files") }
         }
 
-//        Board("b", "Random", "Miscellaneous").saveBoard()
-//        Board("a", "Anime and Manga", "Interests").saveBoard()
-//        Board("x", "Paranormal", "Interests").saveBoard()
-//        Board("pol", "Politically Incorrect", "Miscellaneous").saveBoard()
-//        Board("g", "Technology", "Interests").saveBoard()
-
         handleIndex()
         handleBoards()
     }

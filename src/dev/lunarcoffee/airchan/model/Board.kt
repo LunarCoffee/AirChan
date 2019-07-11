@@ -7,13 +7,13 @@ internal class Board(val code: String, val name: String, val section: String) {
     val threads = mutableListOf<Thread>()
 
     fun createThread(subject: String) {
-        val thread = Thread()
+        val thread = Thread(code)
         thread.posts += Post(subject, emptyList(), -1)
         threads += thread
         saveAll()
     }
 
-    private fun save() = File("$BOARD_DIR/$code.json").writeText(gson.toJson(this))
+    fun save() = File("$BOARD_DIR/$code.json").writeText(gson.toJson(this))
 
     companion object {
         private const val BOARD_DIR = "resources/boards"

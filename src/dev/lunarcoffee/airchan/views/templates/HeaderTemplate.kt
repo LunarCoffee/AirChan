@@ -14,13 +14,22 @@ internal class HeaderTemplate(private val pageTitle: String) : Template<HTML> {
                     +"["
                     a(href = "/", classes = "nodecor-a") { +"Home" }
                     +"] ["
+
+                    // Sort boards by code length, then alphabetically.
+                    val boards = Board
+                        .boards
+                        .groupBy { it.code.length }
+                        .map { pair -> Pair(pair.key, pair.value.sortedBy { it.code }) }
+                        .sortedBy { it.first }
+                        .flatMap { it.second }
+
                     // List all board codes.
-                    for (board in Board.boards.dropLast(1)) {
+                    for (board in boards.dropLast(1)) {
                         a(href = "/${board.code}", classes = "nodecor-a") { +board.code }
                         +" / "
                     }
                     // Edge case to stop an extraneous slash at the end of the list.
-                    val lastCode = Board.boards.last().code
+                    val lastCode = boards.last().code
                     a(href = "/$lastCode", classes = "nodecor-a") { +lastCode }
                     +"]"
                 }

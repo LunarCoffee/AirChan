@@ -19,5 +19,5 @@ internal fun fixVoodooBugs() {
     IdGenerator("Post")
 }
 
-private val formatter = DateTimeFormatter.ofPattern("(E) dd/MM/yyyy kk:mm:ss 'EST'")
+internal val formatter = DateTimeFormatter.ofPattern("(E) dd/MM/yyyy kk:mm:ss 'EST'")
 internal fun LocalDateTime.formatDefault() = format(formatter)!!
