@@ -33,7 +33,13 @@ internal suspend fun ApplicationCall.receiveMultipartForm(): MultipartForm {
                 file = File(FILE_DIR, "$fileHash-$originalName.$extension")
 
                 part.streamProvider().use { input ->
-                    file!!.outputStream().buffered().use { input.copyToSuspend(it) }
+                    file!!.outputStream().buffered().use {
+                        // The file was too big (above 8 MB raw).
+                        if (!input.copyToSuspend(it)) {
+                            file = null
+                            return@forEachPart
+                        }
+                    }
                 }
             }
         }
@@ -42,10 +48,11 @@ internal suspend fun ApplicationCall.receiveMultipartForm(): MultipartForm {
     return MultipartForm(formItemMap, file)
 }
 
-private suspend fun InputStream.copyToSuspend(out: OutputStream) {
+private suspend fun InputStream.copyToSuspend(out: OutputStream): Boolean {
     val yieldSize = 4_194_304
     return withContext(Dispatchers.IO) {
         val buffer = ByteArray(4_194_304)
+        var bytesCopied = 0L
         var bytesAfterYield = 0L
         while (true) {
             val bytes = read(buffer).takeIf { it >= 0 } ?: break
@@ -54,7 +61,12 @@ private suspend fun InputStream.copyToSuspend(out: OutputStream) {
                 yield()
                 bytesAfterYield %= yieldSize
             }
+            bytesCopied += bytes
             bytesAfterYield += bytes
+            if (bytesCopied > 8_000_000) {
+                return@withContext false
+            }
         }
+        true
     }
 }

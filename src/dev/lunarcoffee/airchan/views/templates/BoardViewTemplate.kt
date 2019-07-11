@@ -36,17 +36,21 @@ internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
                         }
                         span {
                             style = "font-size:10px;color:red;"
-                            +"$emsp* All fields must be filled!"
+                            +"$emsp* Only a comment is required!"
                         }
                     }
                 }
                 ul(classes = "posts") {
                     for (thread in board.threads) {
-                        val strippedId = thread.posts[1].images[0].replace("""\s+""".toRegex(), "")
+                        val strippedId = thread
+                            .posts[1]
+                            .images
+                            .firstOrNull()
+                            ?.replace("""\s+""".toRegex(), "")
                         val minMaxClass = "1$strippedId"
 
                         hr(classes = "thread-sep")
-                        // Show OP's first post that started the threat without a card.
+                        // Show OP's first post that started the thread without a card.
                         p(classes = "post-content") {
                             val opPost = thread.posts[1]
                             div(classes = "op-image") {

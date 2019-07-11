@@ -40,7 +40,7 @@ internal class ThreadViewTemplate(
                         }
                         span {
                             style = "font-size:10px;color:red;"
-                            +"$emsp* All fields must be filled!"
+                            +"$emsp* Only a comment is required!"
                         }
                     }
                 }
@@ -49,7 +49,7 @@ internal class ThreadViewTemplate(
                 p(classes = "post-content") {
                     val opPost = thread.posts[1]
                     div(classes = "op-image") {
-                        showImages(opPost.images)
+                        showImages(opPost.images, true)
                     }
 
                     p(classes = "post-text first-post-text") {

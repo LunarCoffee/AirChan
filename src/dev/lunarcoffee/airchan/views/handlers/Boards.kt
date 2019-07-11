@@ -24,23 +24,21 @@ internal fun Routing.handleBoards() {
         // Creates a new thread with a post.
         post("/p") {
             val form = call.receiveMultipartForm()
-            if (form.file == null) {
-                return@post call.backToBoard()
-            }
 
-            val subject = form["subject"]!!.trim()
+            val subject = form["subject"]!!.trim().ifEmpty { " " }
             val comment = form["comment"]!!.trim()
             if (subject.length !in 1..100 || comment.length !in 1..1000) {
                 return@post call.backToBoard()
             }
 
             val board = call.getBoard() ?: return@post call.backToBoard()
-            if (subject.isNotBlank() && comment.isNotBlank()) {
+            if (subject.isNotEmpty() && comment.isNotBlank()) {
                 board.createThread(subject)
-                board
-                    .threads
-                    .last()
-                    .createPost(comment, listOf(form.file.name), call.request.origin.remoteHost)
+                board.threads.last().createPost(
+                    comment,
+                    listOf(form.file?.name ?: "0-no-image.png"),
+                    call.request.origin.remoteHost
+                )
             }
 
             // Send them back to the board page.
