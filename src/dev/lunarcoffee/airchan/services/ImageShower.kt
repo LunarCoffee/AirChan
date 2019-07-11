@@ -6,6 +6,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import javax.imageio.ImageIO
 
+private val noImageFileRegex = """\d+-no-image.png""".toRegex()
+
 internal fun HtmlBlockTag.showImages(images: List<String>, op: Boolean = false) {
     if (images.isEmpty()) {
         return
@@ -35,8 +37,14 @@ internal fun HtmlBlockTag.showImages(images: List<String>, op: Boolean = false) 
             div(classes = "1$minMaxClassOrId") {
                 style = "margin-bottom:-8px;"
 
-                // Display original filename.
+                // The user did not manually upload a photo here.
                 +"File: "
+                if (image.matches(noImageFileRegex)) {
+                    +"(none)"
+                    return@div
+                }
+
+                // Display original filename.
                 a(href = relativePath, target = "_blank", classes = "reply-a") {
                     +image.substringAfter("-")
                 }

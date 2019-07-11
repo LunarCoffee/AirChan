@@ -8,7 +8,7 @@ import java.io.*
 import kotlin.math.abs
 
 private val supportedFormats = setOf("png", "jpg", "jpeg", "tif", "gif")
-private const val FILE_DIR = "resources/static/files/uploads"
+internal const val UPLOAD_DIR = "resources/static/files/uploads"
 
 internal class MultipartForm(private val formItems: Map<String, String>, val file: File?) {
     operator fun get(key: String) = formItems[key]
@@ -30,7 +30,7 @@ internal suspend fun ApplicationCall.receiveMultipartForm(): MultipartForm {
                 }
 
                 val fileHash = abs(System.currentTimeMillis() * originalName.hashCode())
-                file = File(FILE_DIR, "$fileHash-$originalName.$extension")
+                file = File(UPLOAD_DIR, "$fileHash-$originalName.$extension")
 
                 part.streamProvider().use { input ->
                     file!!.outputStream().buffered().use {

@@ -2,7 +2,7 @@ package dev.lunarcoffee.airchan.views.handlers
 
 import dev.lunarcoffee.airchan.model.Board
 import dev.lunarcoffee.airchan.model.Thread
-import dev.lunarcoffee.airchan.services.receiveMultipartForm
+import dev.lunarcoffee.airchan.services.*
 import dev.lunarcoffee.airchan.views.templates.BoardViewTemplate
 import dev.lunarcoffee.airchan.views.templates.ThreadViewTemplate
 import io.ktor.application.ApplicationCall
@@ -13,6 +13,12 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
 import io.ktor.routing.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.nio.file.Files
+import java.nio.file.Paths
+
+private val noImageIdGen = IdGenerator("NoImage")
 
 internal fun Routing.handleBoards() {
     route("/{code}") {
@@ -24,6 +30,13 @@ internal fun Routing.handleBoards() {
         // Creates a new thread with a post.
         post("/p") {
             val form = call.receiveMultipartForm()
+            val file = form.file?.name
+                ?: withContext(Dispatchers.IO) {
+                    Files.copy(
+                        Paths.get("$UPLOAD_DIR/0-no-image.png"),
+                        Paths.get("$UPLOAD_DIR/${noImageIdGen.next()}-no-image.png")
+                    ).toFile().name
+                }
 
             val subject = form["subject"]!!.trim().ifEmpty { " " }
             val comment = form["comment"]!!.trim()
@@ -34,11 +47,10 @@ internal fun Routing.handleBoards() {
             val board = call.getBoard() ?: return@post call.backToBoard()
             if (subject.isNotEmpty() && comment.isNotBlank()) {
                 board.createThread(subject)
-                board.threads.last().createPost(
-                    comment,
-                    listOf(form.file?.name ?: "0-no-image.png"),
-                    call.request.origin.remoteHost
-                )
+                board
+                    .threads
+                    .last()
+                    .createPost(comment, listOf(file), call.request.origin.remoteHost)
             }
 
             // Send them back to the board page.
