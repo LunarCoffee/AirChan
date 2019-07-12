@@ -110,6 +110,7 @@ internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
                                     p { +">>" }
                                 }
                                 div(classes = "post-card width-child") {
+                                    id = "p-${post.id}"
                                     div(classes = "card-content") {
                                         p(classes = "post-info") {
                                             b(classes = "green") { +"Anonymous " }

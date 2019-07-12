@@ -9,8 +9,26 @@ internal fun HtmlBlockTag.formatPostText(text: String, thread: Thread) {
         when (token) {
             is Text -> +token.content
             is PostMention -> a(classes = "post-reply-a") {
+                val rawId = token.content.drop(2)
+                val isOp = rawId.toLong() == thread.posts[1].id
+
+                if (!isOp) {
+                    onMouseOver = """
+                        var e = document.getElementById("p-$rawId");
+                        e.style.background = "#f0c0b0";
+                        e.style.borderRight = "1px solid #d99f91";
+                        e.style.borderBottom = "1px solid #d99f91";
+                    """
+                    onMouseOut = """
+                        var e = document.getElementById("p-$rawId");
+                        e.style.background = "#f0e0d6";
+                        e.style.borderRight = "1px solid #d9bfb7";
+                        e.style.borderBottom = "1px solid #d9bfb7";
+                    """
+                }
+
                 +token.content
-                if (token.content.drop(2).toLong() == thread.posts[1].id) {
+                if (isOp) {
                     +" (OP)"
                 }
             }

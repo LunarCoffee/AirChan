@@ -89,6 +89,7 @@ internal class ThreadViewTemplate(
                             p { +">>" }
                         }
                         div(classes = "post-card width-child") {
+                            id = "p-${post.id}"
                             div(classes = "card-content") {
                                 p(classes = "post-info") {
                                     b(classes = "green") { +"Anonymous " }
