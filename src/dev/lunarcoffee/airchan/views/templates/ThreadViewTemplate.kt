@@ -1,13 +1,13 @@
-package views.templates
+package dev.lunarcoffee.airchan.views.templates
 
-import emsp
+import dev.lunarcoffee.airchan.emsp
+import dev.lunarcoffee.airchan.model.Board
+import dev.lunarcoffee.airchan.model.Thread
+import dev.lunarcoffee.airchan.services.formatting.formatPostText
+import dev.lunarcoffee.airchan.services.showImages
 import io.ktor.html.Template
 import io.ktor.html.insert
 import kotlinx.html.*
-import model.Board
-import model.Thread
-import services.formatting.formatPostText
-import services.showImages
 
 internal class ThreadViewTemplate(
     private val board: Board,
@@ -74,12 +74,7 @@ internal class ThreadViewTemplate(
                         p { style = "font-size:11px;" }
 
                         // Actual post content.
-                        p {
-                            for (line in opPost.text.lines()) {
-                                +line
-                                br()
-                            }
-                        }
+                        p { formatPostText(opPost.text, thread) }
                     }
                 }
                 div(classes = "post") {

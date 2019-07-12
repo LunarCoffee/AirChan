@@ -1,4 +1,4 @@
-package services.formatting
+package dev.lunarcoffee.airchan.services.formatting
 
 internal sealed class Token(val content: String)
 

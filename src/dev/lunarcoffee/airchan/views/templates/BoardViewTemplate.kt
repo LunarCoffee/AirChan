@@ -1,12 +1,12 @@
-package views.templates
+package dev.lunarcoffee.airchan.views.templates
 
-import emsp
+import dev.lunarcoffee.airchan.emsp
+import dev.lunarcoffee.airchan.model.Board
+import dev.lunarcoffee.airchan.services.formatting.formatPostText
+import dev.lunarcoffee.airchan.services.showImages
 import io.ktor.html.Template
 import io.ktor.html.insert
 import kotlinx.html.*
-import model.Board
-import services.formatting.formatPostText
-import services.showImages
 
 internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
     override fun HTML.apply() {
@@ -75,12 +75,7 @@ internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
                                 p { style = "font-size:11px;" }
 
                                 // Actual post content.
-                                p(classes = minMaxClass) {
-                                    for (line in opPost.text.lines()) {
-                                        +line
-                                        br()
-                                    }
-                                }
+                                p(classes = minMaxClass) { formatPostText(opPost.text, thread) }
                             }
                         }
                         // Show the most recent five posts.

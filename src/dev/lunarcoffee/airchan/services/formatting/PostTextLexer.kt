@@ -1,4 +1,4 @@
-package services.formatting
+package dev.lunarcoffee.airchan.services.formatting
 
 internal class PostTextLexer(val text: String) {
     private var pos = 0
@@ -21,7 +21,9 @@ internal class PostTextLexer(val text: String) {
                 }
                 "<" -> {
                     val red = consume("<")
-                    if (red.length == 1) Red(red + consume("[^\n]")) else Text(red)
+                    if (red.length == 1) Red(red + consume("[^\n]")) else Text(
+                        red
+                    )
                 }
                 ">" -> {
                     val mention = consume(">")

@@ -1,4 +1,4 @@
-package services
+package dev.lunarcoffee.airchan.services
 
 import kotlinx.atomicfu.atomic
 import java.io.File

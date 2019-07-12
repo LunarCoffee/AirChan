@@ -1,7 +1,7 @@
-package services.formatting
+package dev.lunarcoffee.airchan.services.formatting
 
 import kotlinx.html.*
-import model.Thread
+import dev.lunarcoffee.airchan.model.Thread
 
 internal fun HtmlBlockTag.formatPostText(text: String, thread: Thread) {
     val tokens = PostTextLexer(text).lex()

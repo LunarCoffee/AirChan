@@ -1,9 +1,9 @@
-package views.handlers
+package dev.lunarcoffee.airchan.views.handlers
 
-import formatter
-import model.Board
-import services.noImageFile
-import views.templates.DefaultStyleTemplate
+import dev.lunarcoffee.airchan.formatter
+import dev.lunarcoffee.airchan.model.Board
+import dev.lunarcoffee.airchan.services.noImageFile
+import dev.lunarcoffee.airchan.views.templates.DefaultStyleTemplate
 import io.ktor.application.call
 import io.ktor.html.respondHtmlTemplate
 import io.ktor.routing.Routing

@@ -1,7 +1,7 @@
-package model
+package dev.lunarcoffee.airchan.model
 
-import formatDefault
-import services.IdGenerator
+import dev.lunarcoffee.airchan.formatDefault
+import dev.lunarcoffee.airchan.services.IdGenerator
 import java.time.LocalDateTime
 
 internal class Post(val text: String, val images: List<String>, val authorId: Int) {

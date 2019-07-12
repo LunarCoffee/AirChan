@@ -1,4 +1,4 @@
-package services
+package dev.lunarcoffee.airchan.services
 
 import kotlinx.html.*
 import java.io.File

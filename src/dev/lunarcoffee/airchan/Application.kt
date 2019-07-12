@@ -1,3 +1,7 @@
+package dev.lunarcoffee.airchan
+
+import dev.lunarcoffee.airchan.views.handlers.handleBoards
+import dev.lunarcoffee.airchan.views.handlers.handleIndex
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -6,8 +10,6 @@ import io.ktor.response.respondText
 import io.ktor.routing.routing
 import io.ktor.server.netty.EngineMain
 import org.slf4j.event.Level
-import views.handlers.handleBoards
-import views.handlers.handleIndex
 import java.io.File
 
 internal fun main(args: Array<String>) {
