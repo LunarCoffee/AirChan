@@ -1,11 +1,12 @@
 package views.templates
 
 import emsp
-import model.Board
-import services.showImages
 import io.ktor.html.Template
 import io.ktor.html.insert
 import kotlinx.html.*
+import model.Board
+import services.formatting.formatPostText
+import services.showImages
 
 internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
     override fun HTML.apply() {
@@ -121,10 +122,7 @@ internal class BoardViewTemplate(private val board: Board) : Template<HTML> {
                                             showImages(post.images)
                                             // Actual post content.
                                             p(classes = "post-text") {
-                                                for (line in post.text.lines()) {
-                                                    +line
-                                                    br()
-                                                }
+                                                formatPostText(post.text, thread)
                                             }
                                         }
                                     }

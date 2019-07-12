@@ -1,12 +1,13 @@
 package views.templates
 
 import emsp
-import model.Board
-import model.Thread
-import services.showImages
 import io.ktor.html.Template
 import io.ktor.html.insert
 import kotlinx.html.*
+import model.Board
+import model.Thread
+import services.formatting.formatPostText
+import services.showImages
 
 internal class ThreadViewTemplate(
     private val board: Board,
@@ -108,12 +109,7 @@ internal class ThreadViewTemplate(
                                 div(classes = "post-content") {
                                     showImages(post.images)
                                     // Actual post content.
-                                    p(classes = "post-text") {
-                                        for (line in post.text.lines()) {
-                                            +line
-                                            br()
-                                        }
-                                    }
+                                    p(classes = "post-text") { formatPostText(post.text, thread) }
                                 }
                             }
                         }

@@ -246,3 +246,21 @@ ul {
 .reply-id-a:visited:hover {
     color: red;
 }
+
+.post-reply-a {
+    color: navy;
+    text-decoration: underline;
+}
+
+.post-reply-a:hover {
+    color: red;
+}
+
+.post-reply-a:visited {
+    color: navy;
+    text-decoration: underline;
+}
+
+.post-reply-a:visited:hover {
+    color: red;
+}
