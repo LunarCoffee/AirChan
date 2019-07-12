@@ -22,16 +22,10 @@ internal fun Application.module() {
     install(CORS)
 
     install(CachingHeaders) {
-        // Don't cache vectors.
-        val imageCacheTypes = ContentType.Image.run { setOf(PNG, JPEG, GIF) }
-
+        val imageCacheTypes = ContentType.Image.run { setOf(PNG, JPEG, GIF, SVG, XIcon) }
         options {
-            // Cache images to reduce flickering, especially in the background tile image.
-            if (it.contentType in imageCacheTypes) {
-                CachingOptions(CacheControl.MaxAge(2_678_400))
-            } else {
-                null
-            }
+            val monthTime = CacheControl.MaxAge(2_678_400)
+            if (it.contentType in imageCacheTypes) CachingOptions(monthTime) else null
         }
     }
 
@@ -43,6 +37,9 @@ internal fun Application.module() {
     }
 
     routing {
+        handleIndex()
+        handleBoards()
+
         static {
             staticRootFolder = File("resources/static")
             file("favicon.ico", "files/favicon.ico")
@@ -51,8 +48,5 @@ internal fun Application.module() {
             static("js") { files("js") }
             static("files") { files("files") }
         }
-
-        handleIndex()
-        handleBoards()
     }
 }
